@@ -8,7 +8,7 @@ abstract class DashboardEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-/// Sự kiện khi người dùng chọn kim loại (vàng hoặc bạc)
+/// Event user selects a metal type
 class MetalToggled extends DashboardEvent {
   final MetalType metal;
 
@@ -18,7 +18,7 @@ class MetalToggled extends DashboardEvent {
   List<Object?> get props => [metal];
 }
 
-/// Sự kiện khi người dùng chọn mốc thời gian
+/// Event user selects a time range on the chart
 class TimeRangeSelected extends DashboardEvent {
   final TimeRange timeRange;
 
@@ -28,7 +28,17 @@ class TimeRangeSelected extends DashboardEvent {
   List<Object?> get props => [timeRange];
 }
 
-/// Sự kiện khi app cần fetch dữ liệu từ API
+/// Event when the user toggles between ounces and "chỉ"
+class UnitToggled extends DashboardEvent {
+  final bool isOz;
+
+  const UnitToggled(this.isOz);
+
+  @override
+  List<Object?> get props => [isOz];
+}
+
+/// Event fetch data for the selected metal type and time range
 class FetchMetalData extends DashboardEvent {
   final MetalType metal;
   final TimeRange timeRange;

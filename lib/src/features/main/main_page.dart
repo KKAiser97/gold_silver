@@ -3,6 +3,7 @@ import 'package:gold_silver/src/features/alert/alert_page.dart';
 import 'package:gold_silver/src/features/dashboard/dashboard_page.dart';
 import 'package:gold_silver/src/features/news/news_page.dart';
 import 'package:gold_silver/src/features/settings/settings_page.dart';
+import 'package:gold_silver/src/theme/app_color.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -37,19 +38,19 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: AppColors.brandColor,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.show_chart),
             label: 'Dashboard',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Alerts',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.article),
             label: 'News',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Alerts',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
