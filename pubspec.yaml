@@ -41,6 +41,8 @@ dependencies:
   fl_chart: ^0.69.2
   flutter_bloc: ^9.1.0
   equatable: ^2.0.7
+  dio_smart_retry: ^6.0.0
+  get_it: ^8.0.3
 
 dev_dependencies:
   flutter_test:

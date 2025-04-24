@@ -1,52 +1,53 @@
 import 'package:equatable/equatable.dart';
+import 'package:gold_silver/src/core/models/metal_chart_model.dart';
 import 'package:gold_silver/src/utils/enums.dart';
 
-class MetalPricePoint {
-  final DateTime time;
-  final double value;
-
-  MetalPricePoint({
-    required this.time,
-    required this.value,
-  });
-}
+// class MetalChartData {
+//   final DateTime time;
+//   final double value;
+//
+//   MetalChartData({
+//     required this.time,
+//     required this.value,
+//   });
+// }
 
 class DashboardState extends Equatable {
-  final MetalType selectedMetal;
+  final MetalType metalType;
   final TimeRange selectedRange;
-  final List<MetalPricePoint> dataPoints;
+  final List<MetalChartData> data;
   final bool isLoading;
   final String? errorMessage;
 
   const DashboardState({
-    required this.selectedMetal,
+    required this.metalType,
     required this.selectedRange,
-    required this.dataPoints,
+    required this.data,
     required this.isLoading,
     this.errorMessage,
   });
 
   factory DashboardState.initial() {
     return const DashboardState(
-      selectedMetal: MetalType.gold,
+      metalType: MetalType.gold,
       selectedRange: TimeRange.oneMonth,
-      dataPoints: [],
+      data: [],
       isLoading: false,
       errorMessage: null,
     );
   }
 
   DashboardState copyWith({
-    MetalType? selectedMetal,
+    MetalType? metalType,
     TimeRange? selectedRange,
-    List<MetalPricePoint>? dataPoints,
+    List<MetalChartData>? data,
     bool? isLoading,
     String? errorMessage,
   }) {
     return DashboardState(
-      selectedMetal: selectedMetal ?? this.selectedMetal,
+      metalType: metalType ?? this.metalType,
       selectedRange: selectedRange ?? this.selectedRange,
-      dataPoints: dataPoints ?? this.dataPoints,
+      data: data ?? this.data,
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage,
     );
@@ -54,10 +55,10 @@ class DashboardState extends Equatable {
 
   @override
   List<Object?> get props => [
-    selectedMetal,
-    selectedRange,
-    dataPoints,
-    isLoading,
-    errorMessage,
-  ];
+        metalType,
+        selectedRange,
+        data,
+        isLoading,
+        errorMessage,
+      ];
 }

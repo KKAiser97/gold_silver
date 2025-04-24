@@ -30,12 +30,23 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+.fvm
 
 # Symbolication related
 app.*.symbols
 
 # Obfuscation related
 app.*.map.json
+
+*.lock
+*.g.dart
+*.freezed.dart
+*.gen.dart
+*.h
+*.cc
+*.cmake
+*.swift
+.properties
 
 # Android Studio will place build artifacts here
 /android/app/debug

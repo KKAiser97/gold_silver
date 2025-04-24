@@ -10,12 +10,12 @@ abstract class DashboardEvent extends Equatable {
 
 /// Event user selects a metal type
 class MetalToggled extends DashboardEvent {
-  final MetalType metal;
+  final MetalType metalType;
 
-  const MetalToggled(this.metal);
+  const MetalToggled({this.metalType = MetalType.gold});
 
   @override
-  List<Object?> get props => [metal];
+  List<Object?> get props => [metalType];
 }
 
 /// Event user selects a time range on the chart
@@ -39,12 +39,12 @@ class UnitToggled extends DashboardEvent {
 }
 
 /// Event fetch data for the selected metal type and time range
-class FetchMetalData extends DashboardEvent {
+class FetchMetalChartData extends DashboardEvent {
   final MetalType metal;
   final TimeRange timeRange;
   final bool isManual; // true nếu là người dùng bấm nút, false nếu là tự động sau 10 phút
 
-  const FetchMetalData({
+  const FetchMetalChartData({
     required this.metal,
     required this.timeRange,
     this.isManual = false,
