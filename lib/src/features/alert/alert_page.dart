@@ -48,13 +48,13 @@ class AlertsPage extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           ListTile(
-            leading: Icon(Icons.picture_as_pdf_outlined),
+            leading: const Icon(Icons.picture_as_pdf_outlined),
             title: const Text('Gửi báo cáo hằng tuần (PDF, Excel)'),
             subtitle: const Text('Tự động gửi vào mỗi cuối tuần'),
             trailing: Switch(value: true, onChanged: (val) {}),
           ),
           ListTile(
-            leading: Icon(Icons.show_chart_outlined),
+            leading: const Icon(Icons.show_chart_outlined),
             title: const Text('Đính kèm biểu đồ trực tiếp trong cảnh báo Telegram'),
             subtitle: const Text('Hiển thị biểu đồ giá vàng/bạc theo thời gian thực'),
             trailing: Switch(value: false, onChanged: (val) {}),

@@ -1,9 +1,12 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gold_silver/src/core/models/metal_chart_model.dart';
+import 'package:gold_silver/src/core/models/metal_model.dart';
 import 'package:gold_silver/src/features/dashboard/domain/dashboard_repository.dart';
 import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_event.dart';
 import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_state.dart';
 import 'package:gold_silver/src/utils/constants.dart';
+import 'package:gold_silver/src/utils/enums.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   late final MetalRepository repository;
@@ -20,35 +23,58 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     try {
       final response = await repository.getMetalData(
         function: AppConstant.timeSeries,
-        symbol: state.metalType.symbol,
+        symbol: event.metal.symbol,
       );
       final data = response.data;
       List<MetalChartData> listData = [];
-      if (data.containsKey("Time Series (Daily)")) {
-        listData = parseChartData(data);
-      } else {
-        throw Exception("Invalid data format");
-      }
-      emit(state.copyWith(isLoading: false, data: listData));
-    } catch (e) {
+      listData = _parseChartData(data);
+      List<MetalChartData> currentList = _filterByRange(listData, event.timeRange);
       emit(state.copyWith(
         isLoading: false,
-        errorMessage: e.toString(),
+        data: currentList,
+        chartSpots: _toChartSpots(currentList),
+        maxY: _getMaxY(currentList),
       ));
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
     }
   }
 
-  List<MetalChartData> parseChartData(Map<String, dynamic> json) {
-    final timeSeries = json['Time Series (Daily)'] as Map<String, dynamic>;
+  List<MetalChartData> _parseChartData(Map<String, TimeSeriesDaily> json) {
     final List<MetalChartData> list = [];
-
-    timeSeries.forEach((dateStr, data) {
+    json.forEach((dateStr, data) {
       list.add(MetalChartData.fromMap(dateStr, data));
     });
-
     list.sort((a, b) => a.date.compareTo(b.date));
-
     return list;
+  }
+
+  List<MetalChartData> _filterByRange(List<MetalChartData> allData, TimeRange range) {
+    switch (range) {
+      case TimeRange.oneWeek:
+        return allData.reversed.take(7).toList().reversed.toList();
+      case TimeRange.oneMonth:
+        return allData.reversed.take(30).toList().reversed.toList();
+      case TimeRange.threeMonth:
+        return allData.reversed.take(90).toList().reversed.toList();
+      case TimeRange.halfYear:
+        return allData.reversed.take(180).toList().reversed.toList();
+      default:
+        return allData;
+    }
+  }
+
+  List<FlSpot> _toChartSpots(List<MetalChartData> data) {
+    return data
+        .asMap()
+        .entries
+        .map((entry) => FlSpot(entry.value.date.millisecondsSinceEpoch.toDouble(), entry.value.close))
+        .toList();
+  }
+
+  double _getMaxY(List<MetalChartData> data) {
+    final maxValue = data.map((e) => e.close).reduce((a, b) => a > b ? a : b);
+    return (maxValue / state.interval).ceil() * state.interval;
   }
 
   void _onChangeMetalType(MetalToggled event, Emitter<DashboardState> emit) {
