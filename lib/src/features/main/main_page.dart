@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gold_silver/src/core/injector/locator.dart';
 import 'package:gold_silver/src/features/alert/alert_page.dart';
 import 'package:gold_silver/src/features/dashboard/dashboard_page.dart';
+import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_bloc.dart';
+import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_event.dart';
 import 'package:gold_silver/src/features/news/news_page.dart';
 import 'package:gold_silver/src/features/settings/settings_page.dart';
 import 'package:gold_silver/src/theme/app_color.dart';
+import 'package:gold_silver/src/utils/enums.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -16,7 +21,14 @@ class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
-    const DashboardPage(),
+    BlocProvider<DashboardBloc>(
+      create: (_) => locator<DashboardBloc>()
+        ..add(const FetchMetalChartData(
+          metal: MetalType.gold,
+          timeRange: TimeRange.oneYear,
+        )),
+      child: const DashboardPage(),
+    ),
     const AlertsPage(),
     const NewsPage(),
     const SettingsPage(),

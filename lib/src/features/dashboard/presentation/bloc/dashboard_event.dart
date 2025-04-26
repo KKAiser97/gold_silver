@@ -28,14 +28,14 @@ class TimeRangeSelected extends DashboardEvent {
   List<Object?> get props => [timeRange];
 }
 
-/// Event when the user toggles between ounces and "chỉ"
+/// Event when the user toggles between ounces and "lượng (tael)"
 class UnitToggled extends DashboardEvent {
-  final bool isOz;
+  final MetalUnit metalUnit;
 
-  const UnitToggled(this.isOz);
+  const UnitToggled(this.metalUnit);
 
   @override
-  List<Object?> get props => [isOz];
+  List<Object?> get props => [metalUnit];
 }
 
 /// Event fetch data for the selected metal type and time range
@@ -52,4 +52,14 @@ class FetchMetalChartData extends DashboardEvent {
 
   @override
   List<Object?> get props => [metal, timeRange, isManual];
+}
+
+/// Event fetch current price for the selected metal
+class FetchCurrentPrice extends DashboardEvent {
+  final MetalType metal;
+
+  const FetchCurrentPrice(this.metal);
+
+  @override
+  List<Object?> get props => [metal];
 }

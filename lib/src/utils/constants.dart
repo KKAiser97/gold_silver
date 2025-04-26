@@ -1,6 +1,8 @@
 class AppConstant {
-  static String apiKey = 'goldapi-3tb8419m9smmq9f-io';
-  static String apiKeyAlpha = '5SM9SOK9DEAJY7GR';
-  static String baseUrl = 'https://www.alphavantage.co/';
+  static String apiKeyGoldApi = 'goldapi-3tb8419m9smmq9f-io';
+  static String apiKeyAlphaVantage = '5SM9SOK9DEAJY7GR';
+  static String baseUrlAlpha = 'https://www.alphavantage.co/';
+  static String baseUrlGold = 'https://www.goldapi.io/';
   static String timeSeries = 'TIME_SERIES_DAILY';
+  static double usdToVnd = 26000; // TODO: Example conversion rate, may use API to get real-time rate
 }

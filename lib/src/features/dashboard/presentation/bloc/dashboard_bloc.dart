@@ -1,8 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gold_silver/src/core/models/metal_chart_model.dart';
-import 'package:gold_silver/src/core/models/metal_model.dart';
 import 'package:gold_silver/src/features/dashboard/domain/dashboard_repository.dart';
+import 'package:gold_silver/src/features/dashboard/domain/models/metal_chart_model.dart';
+import 'package:gold_silver/src/features/dashboard/domain/models/metal_model.dart';
 import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_event.dart';
 import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_state.dart';
 import 'package:gold_silver/src/utils/constants.dart';
@@ -15,6 +15,19 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     on<MetalToggled>(_onChangeMetalType);
     on<FetchMetalChartData>(_onFetchMetalChartData);
     on<TimeRangeSelected>(_onChangeTimeRange);
+    on<UnitToggled>(_onChangeUnit);
+    on<FetchCurrentPrice>(_onFetchCurrentPrice);
+  }
+
+  Future<void> _onFetchCurrentPrice(FetchCurrentPrice event, Emitter<DashboardState> emit) async {
+    emit(state.copyWith(isLoading2: true, errorMessage2: null));
+
+    try {
+      final response = await repository.getCurrentWorldPrice(symbol: event.metal.symbol);
+      emit(state.copyWith(isLoading2: false, currentPrice: response.price.toDouble()));
+    } catch (e) {
+      emit(state.copyWith(isLoading2: false, errorMessage2: e.toString()));
+    }
   }
 
   Future<void> _onFetchMetalChartData(FetchMetalChartData event, Emitter<DashboardState> emit) async {
@@ -23,7 +36,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     try {
       final response = await repository.getMetalData(
         function: AppConstant.timeSeries,
-        symbol: event.metal.symbol,
+        symbol: event.metal.currency,
       );
       final data = response.data;
       List<MetalChartData> listData = [];
@@ -34,6 +47,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         data: currentList,
         chartSpots: _toChartSpots(currentList),
         maxY: _getMaxY(currentList),
+        currentPrice: _getCurrentPrice(listData),
       ));
     } catch (e) {
       emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
@@ -74,16 +88,26 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   double _getMaxY(List<MetalChartData> data) {
     final maxValue = data.map((e) => e.close).reduce((a, b) => a > b ? a : b);
-    return (maxValue / state.interval).ceil() * state.interval;
+    return (maxValue / state.interval.value).ceil() * state.interval.value;
+  }
+
+  double _getCurrentPrice(List<MetalChartData> data) {
+    return data.last.close;
   }
 
   void _onChangeMetalType(MetalToggled event, Emitter<DashboardState> emit) {
-    emit(state.copyWith(metalType: event.metalType));
-    add(FetchMetalChartData(metal: state.metalType, timeRange: state.selectedRange));
+    emit(state.copyWith(
+        metalType: event.metalType, interval: event.metalType == MetalType.gold ? Interval.gold : Interval.silver));
+    add(FetchMetalChartData(metal: state.metalType, timeRange: state.timeRange));
   }
 
   void _onChangeTimeRange(TimeRangeSelected event, Emitter<DashboardState> emit) {
-    emit(state.copyWith(selectedRange: event.timeRange));
-    add(FetchMetalChartData(metal: state.metalType, timeRange: state.selectedRange));
+    emit(state.copyWith(timeRange: event.timeRange));
+    add(FetchMetalChartData(metal: state.metalType, timeRange: state.timeRange));
+  }
+
+  void _onChangeUnit(UnitToggled event, Emitter<DashboardState> emit) {
+    emit(state.copyWith(metalUnit: event.metalUnit));
+    // add(FetchMetalChartData(metal: state.metalType, timeRange: state.timeRange));
   }
 }

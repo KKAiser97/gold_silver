@@ -1,4 +1,4 @@
-import 'package:gold_silver/src/core/models/metal_model.dart';
+import 'package:gold_silver/src/features/dashboard/domain/models/metal_model.dart';
 
 class MetalChartData {
   final DateTime date;

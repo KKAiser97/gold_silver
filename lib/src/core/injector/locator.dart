@@ -8,11 +8,16 @@ import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_b
 final GetIt locator = GetIt.instance;
 
 void setupLocator() {
-  // Register DioClient
-  locator.registerLazySingleton<DioClient>(() => DioClient());
+  /// Register DioClient
+  // locator.registerLazySingleton<DioClient>(() => DioClient());
+  locator.registerLazySingleton<AlphaDioClient>(() => AlphaDioClient());
+  locator.registerLazySingleton<GoldDioClient>(() => GoldDioClient());
 
-  // Register Dashboard services, repo, bloc
-  locator.registerLazySingleton<DashboardService>(() => DashboardServiceImpl(locator<DioClient>()));
+  /// Register Dashboard services, repo, bloc
+  locator.registerLazySingleton<DashboardService>(() => DashboardServiceImpl(
+        alphaClient: locator<AlphaDioClient>(),
+        goldClient: locator<GoldDioClient>(),
+      ));
   locator.registerLazySingleton<MetalRepository>(() => DashboardServiceRepositoryImpl(locator<DashboardService>()));
   locator.registerFactory<DashboardBloc>(() => DashboardBloc(repository: locator<MetalRepository>()));
 }
