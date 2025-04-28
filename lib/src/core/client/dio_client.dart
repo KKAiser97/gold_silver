@@ -66,3 +66,7 @@ class AlphaDioClient extends DioClientBase {
 class GoldDioClient extends DioClientBase {
   GoldDioClient() : super(baseUrl: AppConstant.baseUrlGold, headers: {"x-access-token": AppConstant.apiKeyGoldApi});
 }
+
+class DojiDioClient extends DioClientBase {
+  DojiDioClient() : super(baseUrl: AppConstant.baseUrlDoji);
+}

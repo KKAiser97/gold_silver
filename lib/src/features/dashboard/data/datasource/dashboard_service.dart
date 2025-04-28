@@ -1,7 +1,9 @@
 import 'package:gold_silver/src/core/client/dio_client.dart';
-import 'package:gold_silver/src/features/dashboard/domain/models/metal_model.dart';
-import 'package:gold_silver/src/features/dashboard/domain/models/metal_world_price_model.dart';
+import 'package:gold_silver/src/features/dashboard/domain/models/remote/gold_vn_model.dart';
+import 'package:gold_silver/src/features/dashboard/domain/models/remote/metal_model.dart';
+import 'package:gold_silver/src/features/dashboard/domain/models/remote/metal_world_price_model.dart';
 import 'package:gold_silver/src/utils/constants.dart';
+import 'package:gold_silver/src/utils/enums.dart';
 
 abstract class DashboardService {
   Future<MetalModel> getMetalData({
@@ -10,13 +12,20 @@ abstract class DashboardService {
   });
 
   Future<MetalWorldPriceModel> getCurrentWorldPrice({required String symbol});
+
+  Future<GoldVnModel?> getGoldVnData(MetalType metal);
 }
 
 class DashboardServiceImpl implements DashboardService {
   final AlphaDioClient alphaClient;
   final GoldDioClient goldClient;
+  final DojiDioClient dojiClient;
 
-  const DashboardServiceImpl({required this.alphaClient, required this.goldClient});
+  const DashboardServiceImpl({
+    required this.alphaClient,
+    required this.goldClient,
+    required this.dojiClient,
+  });
 
   @override
   Future<MetalModel> getMetalData({required String function, required String symbol}) async {
@@ -26,6 +35,7 @@ class DashboardServiceImpl implements DashboardService {
       'apikey': AppConstant.apiKeyAlphaVantage,
     });
     return MetalModel.fromJson(res.data);
+    // return MetalModel(metaData: MetaData(), data: {});
   }
 
   @override
@@ -33,6 +43,19 @@ class DashboardServiceImpl implements DashboardService {
     try {
       final res = await goldClient.dio.get('/api/$symbol/USD');
       return MetalWorldPriceModel.fromJson(res.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<GoldVnModel?> getGoldVnData(MetalType metal) async {
+    try {
+      if (metal == MetalType.gold) {
+        final res = await dojiClient.dio.get('/v1/gold-prices');
+        return GoldVnModel.fromJson(res.data);
+      }
+      return null;
     } catch (e) {
       rethrow;
     }

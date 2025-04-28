@@ -42,11 +42,13 @@ class UnitToggled extends DashboardEvent {
 class FetchMetalChartData extends DashboardEvent {
   final MetalType metal;
   final TimeRange timeRange;
+  final bool willUpdate;
   final bool isManual; // true nếu là người dùng bấm nút, false nếu là tự động sau 10 phút
 
   const FetchMetalChartData({
     required this.metal,
     required this.timeRange,
+    this.willUpdate = true,
     this.isManual = false,
   });
 

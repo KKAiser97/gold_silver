@@ -12,12 +12,14 @@ void setupLocator() {
   // locator.registerLazySingleton<DioClient>(() => DioClient());
   locator.registerLazySingleton<AlphaDioClient>(() => AlphaDioClient());
   locator.registerLazySingleton<GoldDioClient>(() => GoldDioClient());
+  locator.registerLazySingleton<DojiDioClient>(() => DojiDioClient());
 
   /// Register Dashboard services, repo, bloc
   locator.registerLazySingleton<DashboardService>(() => DashboardServiceImpl(
         alphaClient: locator<AlphaDioClient>(),
         goldClient: locator<GoldDioClient>(),
+        dojiClient: locator<DojiDioClient>(),
       ));
-  locator.registerLazySingleton<MetalRepository>(() => DashboardServiceRepositoryImpl(locator<DashboardService>()));
-  locator.registerFactory<DashboardBloc>(() => DashboardBloc(repository: locator<MetalRepository>()));
+  locator.registerLazySingleton<DashboardRepository>(() => DashboardServiceRepositoryImpl(locator<DashboardService>()));
+  locator.registerFactory<DashboardBloc>(() => DashboardBloc(repository: locator<DashboardRepository>()));
 }

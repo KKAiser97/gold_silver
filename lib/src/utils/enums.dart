@@ -1,4 +1,15 @@
-enum TimeRange { oneDay, oneWeek, oneMonth, threeMonth, halfYear, oneYear }
+enum TimeRange {
+  oneDay('1d'),
+  oneWeek('1w'),
+  oneMonth('1m'),
+  threeMonth('3m'),
+  halfYear('6m'),
+  oneYear('1y');
+
+  final String val;
+
+  const TimeRange(this.val);
+}
 
 enum MetalType {
   gold('XAUUSD'),

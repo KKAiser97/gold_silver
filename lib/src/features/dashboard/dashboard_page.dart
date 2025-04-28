@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_event.dart';
 import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_state.dart';
+import 'package:gold_silver/src/theme/theme.dart';
 import 'package:gold_silver/src/utils/enums.dart';
 import 'package:intl/intl.dart';
 
@@ -26,7 +27,7 @@ class DashboardPage extends StatelessWidget {
                 const Text("Select Metal"),
                 const SizedBox(width: 16),
                 DropdownButton<MetalType>(
-                  // value: context.read<DashboardBloc>().state.metalType,
+                  value: context.watch<DashboardBloc>().state.metalType,
                   items: MetalType.values.map((MetalType metal) {
                     return DropdownMenuItem<MetalType>(
                       value: metal,
@@ -42,6 +43,25 @@ class DashboardPage extends StatelessWidget {
               ],
             ),
           ),
+          Wrap(
+              children: context.watch<DashboardBloc>().timeRanges.map((timeRange) {
+            return ValueListenableBuilder<bool>(
+              valueListenable: timeRange.isSelected,
+              builder: (BuildContext context, bool value, Widget? child) {
+                return InkWell(
+                  onTap: () => context.read<DashboardBloc>().add(TimeRangeSelected(timeRange.timeRange)),
+                  child: Container(
+                      padding: const EdgeInsets.all(4),
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      decoration: BoxDecoration(
+                          color: value ? AppColors.schemeColor : AppColors.transparent,
+                          border: Border.all(color: AppColors.black),
+                          borderRadius: const BorderRadius.all(Radius.circular(6))),
+                      child: Text(timeRange.timeRange.val)),
+                );
+              },
+            );
+          }).toList()),
           BlocBuilder<DashboardBloc, DashboardState>(
             builder: (context, state) {
               if (state.isLoading) {
@@ -49,9 +69,8 @@ class DashboardPage extends StatelessWidget {
               } else if (!state.isLoading && (state.errorMessage == null || state.errorMessage!.isEmpty)) {
                 return Column(children: [
                   Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                     width: double.infinity,
-                    // Ensures the container takes the full width
                     child: AspectRatio(
                       aspectRatio: 1.2,
                       child: LineChart(
@@ -99,36 +118,46 @@ class DashboardPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          context.read<DashboardBloc>().add(FetchCurrentPrice(state.metalType));
-                        },
-                        child: Text('Cập nhật giá'),
-                      ),
-                      DropdownButton<MetalUnit>(
-                        // value: context.read<DashboardBloc>().state.metalType,
-                        items: MetalUnit.values.map((MetalUnit metal) {
-                          return DropdownMenuItem<MetalUnit>(
-                            value: metal,
-                            child: Text(metal.name),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          if (value != null) {
-                            context.read<DashboardBloc>().add(UnitToggled(value));
-                          }
-                        },
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.schemeColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(6), // Reduced border radius
+                            ),
+                          ),
+                          onPressed: () {
+                            context.read<DashboardBloc>().add(FetchCurrentPrice(state.metalType));
+                          },
+                          child: Text('Cập nhật giá'),
+                        ),
+                        DropdownButton<MetalUnit>(
+                          value: context.watch<DashboardBloc>().state.metalUnit,
+                          items: MetalUnit.values.map((MetalUnit metal) {
+                            return DropdownMenuItem<MetalUnit>(
+                              value: metal,
+                              child: Text(metal.name),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            if (value != null) {
+                              context.read<DashboardBloc>().add(UnitToggled(value));
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Text(
-                      'Giá hiện tai: ${state.metalUnit == MetalUnit.ounce ? state.currentPrice : state.currentPriceConvertToTael} ${state.metalUnit == MetalUnit.ounce ? 'USD/oz' : 'VND/lượng'}'),
+                      'Giá thực tế thế giới: ${state.metalUnit == MetalUnit.ounce ? state.currentPrice : state.currentPriceConvertToTael} ${state.metalUnit == MetalUnit.ounce ? 'USD/oz' : 'VND/lượng'}'),
                   const SizedBox(height: 16),
-                  Text('Giá thực tế tại VN: '), //TODO: Add logic to get the real price in VN
+                  if (state.currentDojiPrice != null && state.metalType == MetalType.gold)
+                    Text('Giá thực tế tại VN: ${state.currentDojiPrice} VND/lượng'),
                 ]);
               } else if (state.errorMessage != null) {
                 return Center(child: Text("Error: ${state.errorMessage}"));
