@@ -157,7 +157,7 @@ class DashboardPage extends StatelessWidget {
                       'Giá thực tế thế giới: ${state.metalUnit == MetalUnit.ounce ? state.currentPrice : state.currentPriceConvertToTael} ${state.metalUnit == MetalUnit.ounce ? 'USD/oz' : 'VND/lượng'}'),
                   const SizedBox(height: 16),
                   if (state.currentDojiPrice != null && state.metalType == MetalType.gold)
-                    Text('Giá thực tế tại VN: ${state.currentDojiPrice} VND/lượng'),
+                    Text('Giá thực tế tại VN: ${state.currentDojiPrice?.toStringAsFixed(0)} VND/lượng'),
                 ]);
               } else if (state.errorMessage != null) {
                 return Center(child: Text("Error: ${state.errorMessage}"));

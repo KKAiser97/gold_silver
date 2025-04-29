@@ -67,6 +67,14 @@ class GoldDioClient extends DioClientBase {
   GoldDioClient() : super(baseUrl: AppConstant.baseUrlGold, headers: {"x-access-token": AppConstant.apiKeyGoldApi});
 }
 
+class BgDioClient extends DioClientBase {
+  BgDioClient() : super(baseUrl: AppConstant.baseUrlGold, headers: {"x-access-token": AppConstant.apiKeyGoldApi});
+}
+
 class DojiDioClient extends DioClientBase {
   DojiDioClient() : super(baseUrl: AppConstant.baseUrlDoji);
+}
+
+class BgDojiDioClient extends DioClientBase {
+  BgDojiDioClient() : super(baseUrl: AppConstant.baseUrlDoji);
 }

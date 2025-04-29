@@ -31,8 +31,6 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     TimeRangeModel(timeRange: TimeRange.oneYear),
   ];
 
-  String gold24k = 'vang24k';
-
   Future<void> _onFetchCurrentPrice(FetchCurrentPrice event, Emitter<DashboardState> emit) async {
     emit(state.copyWith(isLoading2: true, errorMessage2: null));
 
@@ -45,7 +43,12 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         isLoading2: false,
         currentPrice: (response[0] as MetalWorldPriceModel).price.toDouble(),
         currentDojiPrice: response[1] != null
-            ? ((response[1] as GoldVnModel).jewelry.prices.firstWhere((element) => element.key == gold24k).sell * 10000)
+            ? ((response[1] as GoldVnModel)
+                    .jewelry
+                    .prices
+                    .firstWhere((element) => element.key == AppConstant.gold24k)
+                    .sell *
+                10000)
             : null,
       ));
     } catch (e) {
