@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_event.dart';
 import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_state.dart';
-import 'package:gold_silver/src/features/main/main_page.dart';
+import 'package:gold_silver/src/features/main/main_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -17,7 +17,7 @@ class LoginScreen extends StatelessWidget {
           if (state is AuthLoaded) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const MainPage()),
+              MaterialPageRoute(builder: (context) => const MainScreen()),
             );
           } else if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(

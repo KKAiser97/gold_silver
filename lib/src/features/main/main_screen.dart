@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gold_silver/src/core/injector/locator.dart';
-import 'package:gold_silver/src/features/alert/alert_page.dart';
-import 'package:gold_silver/src/features/dashboard/dashboard_page.dart';
+import 'package:gold_silver/src/features/alert/alert_screen.dart';
+import 'package:gold_silver/src/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_event.dart';
-import 'package:gold_silver/src/features/news/news_page.dart';
-import 'package:gold_silver/src/features/settings/settings_page.dart';
+import 'package:gold_silver/src/features/news/news_screen.dart';
+import 'package:gold_silver/src/features/settings/settings_screen.dart';
 import 'package:gold_silver/src/theme/app_color.dart';
 import 'package:gold_silver/src/utils/enums.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   static final List<Widget> _pages = <Widget>[
@@ -27,11 +27,11 @@ class _MainPageState extends State<MainPage> {
           metal: MetalType.gold,
           timeRange: TimeRange.oneYear,
         )),
-      child: const DashboardPage(),
+      child: const DashboardScreen(),
     ),
-    const AlertsPage(),
-    const NewsPage(),
-    const SettingsPage(),
+    const AlertsScreen(),
+    const NewsScreen(),
+    const SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {

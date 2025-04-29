@@ -8,8 +8,8 @@ import 'package:gold_silver/src/theme/theme.dart';
 import 'package:gold_silver/src/utils/enums.dart';
 import 'package:intl/intl.dart';
 
-class DashboardPage extends StatelessWidget {
-  const DashboardPage({Key? key}) : super(key: key);
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
