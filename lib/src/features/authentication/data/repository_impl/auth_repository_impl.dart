@@ -16,4 +16,15 @@ class AuthServiceRepositoryImpl implements AuthRepository {
   Future<void> signOut() {
     return service.signOut();
   }
+
+  @override
+  Future<UserCredential?> signInWithEmailAndPassword({String email = '', String password = ''}) {
+    return service.signInWithEmailAndPassword(email: email, password: password);
+  }
+
+  @override
+  Future<UserCredential?> createUserWithEmailAndPassword(
+      {String email = '', String password = '', String username = ''}) {
+    return service.createUserWithEmailAndPassword(email: email, password: password, username: username);
+  }
 }

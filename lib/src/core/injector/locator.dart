@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:gold_silver/src/core/client/dio_client.dart';
 import 'package:gold_silver/src/features/authentication/data/datasource/auth_service.dart';
@@ -10,6 +12,8 @@ import 'package:gold_silver/src/features/dashboard/domain/dashboard_repository.d
 import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 
 final GetIt locator = GetIt.instance;
+final firebaseAuth = FirebaseAuth.instance;
+final firebaseFirestore = FirebaseFirestore.instance;
 
 void setupLocator() {
   /// Register DioClient

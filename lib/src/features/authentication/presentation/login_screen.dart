@@ -3,10 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_event.dart';
 import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_state.dart';
+import 'package:gold_silver/src/features/authentication/presentation/register_screen.dart';
 import 'package:gold_silver/src/features/main/main_screen.dart';
+import 'package:gold_silver/src/theme/theme.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
+
+  final emailCtrl = TextEditingController();
+  final passwordCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +30,47 @@ class LoginScreen extends StatelessWidget {
             );
           }
         },
-        child: Center(
-          child: ElevatedButton.icon(
-            icon: Icon(Icons.login),
-            label: Text("Đăng nhập với Google"),
-            onPressed: () {
-              context.read<AuthBloc>().add(const GoogleSignInEvent());
-            },
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              TextField(
+                controller: emailCtrl,
+                decoration: const InputDecoration(labelText: 'Email'),
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: passwordCtrl,
+                obscureText: true,
+                decoration: const InputDecoration(labelText: 'Password'),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.schemeColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6), // Reduced border radius
+                    ),
+                  ),
+                  onPressed: () => context
+                      .read<AuthBloc>()
+                      .add(LoginEvent(email: emailCtrl.text.trim(), password: passwordCtrl.text.trim())),
+                  child: const Text('Đăng nhập')),
+              const SizedBox(height: 8),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text('Chưa có tài khoản?'),
+                const SizedBox(width: 8),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterScreen()),
+                    );
+                  },
+                  child: const Text('Đăng ký'),
+                ),
+              ]),
+            ],
           ),
         ),
       ),
