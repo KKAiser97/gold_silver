@@ -8,3 +8,12 @@ class AppConstant {
   static String gold24k = 'vang24k';
   static double usdToVnd = 26000; // TODO: Example conversion rate, may use API to get real-time rate
 }
+
+class Routes {
+  static const String splash = '/';
+  static const String login = '/login';
+  static const String register = '/register';
+  static const String main = '/main';
+  static const String dashboard = '/dashboard';
+  static const String settings = '/settings';
+}

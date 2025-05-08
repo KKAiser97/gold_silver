@@ -9,4 +9,5 @@ class AppColors {
 
   static const Color schemeColor = Colors.amber;
   static const Color brandColor = Color(0xFFFF8F00);
+  static const Color black300 = Color(0xffbababa);
 }

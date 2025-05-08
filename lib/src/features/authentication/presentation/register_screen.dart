@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_event.dart';
 import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_state.dart';
-import 'package:gold_silver/src/features/main/main_screen.dart';
 import 'package:gold_silver/src/theme/theme.dart';
+import 'package:gold_silver/src/utils/constants.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
@@ -18,10 +18,7 @@ class RegisterScreen extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthLoaded) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const MainScreen()),
-          );
+          Navigator.pushReplacementNamed(context, Routes.main);
         } else if (state is AuthError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message)),

@@ -3,9 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_event.dart';
 import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_state.dart';
-import 'package:gold_silver/src/features/authentication/presentation/register_screen.dart';
-import 'package:gold_silver/src/features/main/main_screen.dart';
 import 'package:gold_silver/src/theme/theme.dart';
+import 'package:gold_silver/src/utils/constants.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -20,10 +19,7 @@ class LoginScreen extends StatelessWidget {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthLoaded) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const MainScreen()),
-            );
+            Navigator.pushReplacementNamed(context, Routes.main);
           } else if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message)),
@@ -62,10 +58,7 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(width: 8),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => RegisterScreen()),
-                    );
+                    Navigator.pushNamed(context, Routes.register);
                   },
                   child: const Text('Đăng ký'),
                 ),

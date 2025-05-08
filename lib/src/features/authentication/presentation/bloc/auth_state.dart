@@ -26,7 +26,7 @@ class AuthError extends AuthState {
   final String message;
   final DateTime timestamp;
 
-  /// Added timestamp to guarantee uniqueness of error state (bloc compares old state with new state to trigger UI update)
+  ///MARK: Added timestamp to guarantee uniqueness of error state (bloc compares old state with new state to trigger UI update)
 
   AuthError(this.message) : timestamp = DateTime.now();
 
