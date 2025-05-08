@@ -5,6 +5,7 @@ import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_e
 import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_state.dart';
 import 'package:gold_silver/src/theme/theme.dart';
 import 'package:gold_silver/src/utils/constants.dart';
+import 'package:localization/localization.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -15,7 +16,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Đăng nhập')),
+      appBar: AppBar(title: Text('login'.i18n())),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthLoaded) {
@@ -51,16 +52,16 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () => context
                       .read<AuthBloc>()
                       .add(LoginEvent(email: emailCtrl.text.trim(), password: passwordCtrl.text.trim())),
-                  child: const Text('Đăng nhập')),
+                  child: Text('login'.i18n())),
               const SizedBox(height: 8),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text('Chưa có tài khoản?'),
+                Text('not_have_account'.i18n()),
                 const SizedBox(width: 8),
                 TextButton(
                   onPressed: () {
                     Navigator.pushNamed(context, Routes.register);
                   },
-                  child: const Text('Đăng ký'),
+                  child: Text('register'.i18n()),
                 ),
               ]),
             ],

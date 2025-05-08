@@ -43,7 +43,7 @@ dependencies:
   equatable: ^2.0.7
   dio_smart_retry: ^6.0.0
   get_it: ^8.0.3
-  intl: ^0.18.1
+  intl: ^0.18.0
   workmanager: 0.5.0
   flutter_local_notifications: 17.2.4
   firebase_core: ^2.27.0
@@ -53,6 +53,11 @@ dependencies:
   cloud_firestore: ^4.15.8
   collection: ^1.18.0
   flutter_svg: ^2.0.10+1
+
+  # Localization
+  flutter_localizations:
+    sdk: flutter
+  localization: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -74,18 +79,11 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
 
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
+  generate: true
   assets:
     - assets/svgs/
-
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
+    - assets/langs/
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a

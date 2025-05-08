@@ -7,6 +7,7 @@ import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_s
 import 'package:gold_silver/src/theme/theme.dart';
 import 'package:gold_silver/src/utils/enums.dart';
 import 'package:intl/intl.dart';
+import 'package:localization/localization.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class DashboardScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Select Metal"),
+                Text('select'.i18n()),
                 const SizedBox(width: 16),
                 DropdownButton<MetalType>(
                   value: context.watch<DashboardBloc>().state.metalType,
@@ -133,7 +134,7 @@ class DashboardScreen extends StatelessWidget {
                           onPressed: () {
                             context.read<DashboardBloc>().add(FetchCurrentPrice(state.metalType));
                           },
-                          child: Text('Cập nhật giá'),
+                          child: Text('update_price'.i18n()),
                         ),
                         DropdownButton<MetalUnit>(
                           value: context.watch<DashboardBloc>().state.metalUnit,
@@ -154,10 +155,10 @@ class DashboardScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                      'Giá thực tế thế giới: ${state.metalUnit == MetalUnit.ounce ? state.currentPrice : state.currentPriceConvertToTael} ${state.metalUnit == MetalUnit.ounce ? 'USD/oz' : 'VND/lượng'}'),
+                      '${'current_price_world'.i18n()}: ${state.metalUnit == MetalUnit.ounce ? state.currentPrice : state.currentPriceConvertToTael} ${state.metalUnit == MetalUnit.ounce ? 'USD/oz' : 'VND/lượng'}'),
                   const SizedBox(height: 16),
                   if (state.currentDojiPrice != null && state.metalType == MetalType.gold)
-                    Text('Giá thực tế tại VN: ${state.currentDojiPrice?.toStringAsFixed(0)} VND/lượng'),
+                    Text('${'current_price_vn'.i18n()}: ${state.currentDojiPrice?.toStringAsFixed(0)} VND/lượng'),
                 ]);
               } else if (state.errorMessage != null) {
                 return Center(child: Text("Error: ${state.errorMessage}"));

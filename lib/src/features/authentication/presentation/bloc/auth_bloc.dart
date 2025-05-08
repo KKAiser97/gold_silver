@@ -8,6 +8,7 @@ import 'package:gold_silver/src/features/authentication/domain/auth_repository.d
 import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_event.dart';
 import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_state.dart';
 import 'package:gold_silver/src/utils/router/app_router.dart';
+import 'package:localization/localization.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   late final AuthRepository repository;
@@ -83,20 +84,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Đăng xuất'),
-            content: const Text('Bạn có chắc chắn muốn đăng xuất không?'),
+            title: Text('logout'.i18n()),
+            content: Text('ensure_to_logout'.i18n()),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(false);
                 },
-                child: const Text('Không'),
+                child: Text('no'.i18n()),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop(true);
                 },
-                child: const Text('Có'),
+                child: Text('yes'.i18n()),
               ),
             ],
           );

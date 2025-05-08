@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gold_silver/src/features/authentication/presentation/login_screen.dart';
-import 'package:gold_silver/src/features/authentication/presentation/register_screen.dart';
-import 'package:gold_silver/src/features/authentication/presentation/splash_screen.dart';
+import 'package:gold_silver/src/features/authentication/presentation/screens/login_screen.dart';
+import 'package:gold_silver/src/features/authentication/presentation/screens/register_screen.dart';
+import 'package:gold_silver/src/features/authentication/presentation/screens/splash_screen.dart';
 import 'package:gold_silver/src/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:gold_silver/src/features/main/main_screen.dart';
 import 'package:gold_silver/src/utils/constants.dart';

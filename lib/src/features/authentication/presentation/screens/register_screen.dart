@@ -5,6 +5,7 @@ import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_e
 import 'package:gold_silver/src/features/authentication/presentation/bloc/auth_state.dart';
 import 'package:gold_silver/src/theme/theme.dart';
 import 'package:gold_silver/src/utils/constants.dart';
+import 'package:localization/localization.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
@@ -26,7 +27,7 @@ class RegisterScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('Đăng ký')),
+        appBar: AppBar(title: Text('register'.i18n())),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(16),
           child: ElevatedButton(
@@ -41,7 +42,7 @@ class RegisterScreen extends StatelessWidget {
                     password: passwordCtrl.text.trim(),
                     username: usernameCtrl.text.trim(),
                   )),
-              child: const Text('Đăng ký')),
+              child: Text('register'.i18n())),
         ),
         body: Container(
           padding: const EdgeInsets.all(16),
