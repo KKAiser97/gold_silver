@@ -10,6 +10,10 @@ import 'package:gold_silver/src/features/dashboard/data/datasource/dashboard_ser
 import 'package:gold_silver/src/features/dashboard/data/repositories/dashboard_repository_impl.dart';
 import 'package:gold_silver/src/features/dashboard/domain/dashboard_repository.dart';
 import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_bloc.dart';
+import 'package:gold_silver/src/features/forgot_password/data/datasource/password_service.dart';
+import 'package:gold_silver/src/features/forgot_password/data/repository_impl/password_repository_impl.dart';
+import 'package:gold_silver/src/features/forgot_password/domain/password_repository.dart';
+import 'package:gold_silver/src/features/forgot_password/presentation/bloc/password_bloc.dart';
 
 final GetIt locator = GetIt.instance;
 final firebaseAuth = FirebaseAuth.instance;
@@ -35,4 +39,9 @@ void setupLocator() {
   locator.registerLazySingleton<AuthService>(() => AuthServiceImpl());
   locator.registerLazySingleton<AuthRepository>(() => AuthServiceRepositoryImpl(locator<AuthService>()));
   locator.registerFactory<AuthBloc>(() => AuthBloc(repository: locator<AuthRepository>()));
+
+  /// Register Password services, repos, blocs
+  locator.registerLazySingleton<PasswordService>(() => PasswordServiceImpl());
+  locator.registerLazySingleton<PasswordRepository>(() => PasswordServiceRepositoryImpl(locator<PasswordService>()));
+  locator.registerFactory<PasswordBloc>(() => PasswordBloc(repository: locator<PasswordRepository>()));
 }

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gold_silver/src/core/injector/locator.dart';
 import 'package:gold_silver/src/features/authentication/presentation/screens/login_screen.dart';
 import 'package:gold_silver/src/features/authentication/presentation/screens/register_screen.dart';
 import 'package:gold_silver/src/features/authentication/presentation/screens/splash_screen.dart';
 import 'package:gold_silver/src/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:gold_silver/src/features/forgot_password/presentation/bloc/password_bloc.dart';
+import 'package:gold_silver/src/features/forgot_password/presentation/forgot_password_screen.dart';
 import 'package:gold_silver/src/features/main/main_screen.dart';
 import 'package:gold_silver/src/utils/constants.dart';
 import 'package:gold_silver/src/utils/extensions/exts.dart';
@@ -24,6 +28,13 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const MainScreen());
       case Routes.dashboard:
         return MaterialPageRoute(builder: (_) => const DashboardScreen());
+      case Routes.forgotPassword:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider<PasswordBloc>(
+            create: (_) => locator<PasswordBloc>(),
+            child: const ForgotPasswordScreen(),
+          ),
+        );
       default:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
     }

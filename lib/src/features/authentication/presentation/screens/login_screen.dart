@@ -43,17 +43,22 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.schemeColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6), // Reduced border radius
-                    ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.schemeColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6), // Reduced border radius
                   ),
-                  onPressed: () => context
-                      .read<AuthBloc>()
-                      .add(LoginEvent(email: emailCtrl.text.trim(), password: passwordCtrl.text.trim())),
-                  child: Text('login'.i18n())),
+                ),
+                onPressed: () => context
+                    .read<AuthBloc>()
+                    .add(LoginEvent(email: emailCtrl.text.trim(), password: passwordCtrl.text.trim())),
+                child: Text('login'.i18n()),
+              ),
               const SizedBox(height: 8),
+              TextButton(
+                onPressed: () => Navigator.pushNamed(context, Routes.forgotPassword),
+                child: Text('${'forgot_password'.i18n()} ?'),
+              ),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text('not_have_account'.i18n()),
                 const SizedBox(width: 8),
