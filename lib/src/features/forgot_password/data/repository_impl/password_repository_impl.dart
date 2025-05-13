@@ -10,4 +10,19 @@ class PasswordServiceRepositoryImpl implements PasswordRepository {
   Future<void> sendPasswordResetEmail(String email) {
     return service.sendPasswordResetEmail(email);
   }
+
+  @override
+  Future<bool> resetPassword({
+    String email = '',
+    String oldPassword = '',
+    String newPassword = '',
+    String confirmPassword = '',
+  }) {
+    return service.resetPassword(
+      email: email,
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+      confirmPassword: confirmPassword,
+    );
+  }
 }

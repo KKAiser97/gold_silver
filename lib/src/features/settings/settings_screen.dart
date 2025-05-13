@@ -26,6 +26,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           ListTile(
+            onTap: () => Navigator.pushNamed(context, Routes.changePassword),
             leading: const Icon(Icons.lock),
             title: Text('doi_mat_khau'.i18n()),
           ),

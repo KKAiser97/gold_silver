@@ -13,6 +13,10 @@ class PwLoading extends PasswordState {}
 
 class LinkResetPwSent extends PasswordState {}
 
+class NewPwNotMatch extends PasswordState {}
+
+class PwReset extends PasswordState {}
+
 class PwError extends PasswordState {
   final String message;
   final DateTime timestamp;

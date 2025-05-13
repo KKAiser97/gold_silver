@@ -6,6 +6,7 @@ import 'package:gold_silver/src/features/authentication/presentation/screens/reg
 import 'package:gold_silver/src/features/authentication/presentation/screens/splash_screen.dart';
 import 'package:gold_silver/src/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:gold_silver/src/features/forgot_password/presentation/bloc/password_bloc.dart';
+import 'package:gold_silver/src/features/forgot_password/presentation/change_password_screen.dart';
 import 'package:gold_silver/src/features/forgot_password/presentation/forgot_password_screen.dart';
 import 'package:gold_silver/src/features/main/main_screen.dart';
 import 'package:gold_silver/src/utils/constants.dart';
@@ -33,6 +34,13 @@ class AppRouter {
           builder: (_) => BlocProvider<PasswordBloc>(
             create: (_) => locator<PasswordBloc>(),
             child: const ForgotPasswordScreen(),
+          ),
+        );
+      case Routes.changePassword:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider<PasswordBloc>(
+            create: (_) => locator<PasswordBloc>(),
+            child: ChangePasswordScreen(),
           ),
         );
       default:

@@ -21,5 +21,11 @@
   "link_forgot_password_has_been_sent": "Link đặt lại mật khẩu đã được gửi đến email.",
   "forgot_password": "Quên mật khẩu",
   "enter_email_forgot_password": "Nhập email để khôi phục mật khẩu.",
-  "send_link_forgot_password": "Gửi link khôi phục mật khẩu"
+  "send_link_forgot_password": "Gửi link khôi phục mật khẩu",
+  "mat_khau_hien_tai": "Mật khẩu hiện tại",
+  "mat_khau_moi": "Mật khẩu mới",
+  "xac_nhan_mat_khau": "Xác nhận mật khẩu",
+  "doi_mat_khau_thanh_cong": "Đổi mật khẩu thành công",
+  "thay_doi_mat_khau_that_bai": "Thay đổi mật khẩu thất bại",
+  "mat_khau_moi_khong_khop": "Mật khẩu mới không khớp"
 }
