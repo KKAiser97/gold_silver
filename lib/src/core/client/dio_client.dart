@@ -78,3 +78,7 @@ class DojiDioClient extends DioClientBase {
 class BgDojiDioClient extends DioClientBase {
   BgDojiDioClient() : super(baseUrl: AppConstant.baseUrlDoji);
 }
+
+class NewsDioClient extends DioClientBase {
+  NewsDioClient() : super(baseUrl: AppConstant.baseUrlNews);
+}

@@ -31,10 +31,10 @@ class SettingsScreen extends StatelessWidget {
             title: Text('doi_mat_khau'.i18n()),
           ),
           const Divider(),
-          ListTile(
-            leading: const Icon(Icons.notifications_active),
-            title: Text('cai_dat_thong_bao'.i18n()),
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.notifications_active),
+          //   title: Text('cai_dat_thong_bao'.i18n()),
+          // ),
           // const Divider(),
           // DropdownButton<Locale>(
           //   value: context.read<LocaleBloc>().state.locale,
@@ -54,7 +54,7 @@ class SettingsScreen extends StatelessWidget {
           //     }
           //   },
           // ),
-          const Divider(),
+          // const Divider(),
           ListTile(
             onTap: () => context.read<AuthBloc>().add(const SignOutEvent()),
             leading: const Icon(Icons.login),

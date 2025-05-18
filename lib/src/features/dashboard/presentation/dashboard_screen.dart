@@ -66,7 +66,10 @@ class DashboardScreen extends StatelessWidget {
           BlocBuilder<DashboardBloc, DashboardState>(
             builder: (context, state) {
               if (state.isLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return Container(
+                  padding: const EdgeInsets.all(32),
+                  child: const CircularProgressIndicator(),
+                );
               } else if (!state.isLoading && (state.errorMessage == null || state.errorMessage!.isEmpty)) {
                 return Column(children: [
                   Container(
@@ -161,7 +164,10 @@ class DashboardScreen extends StatelessWidget {
                     Text('${'current_price_vn'.i18n()}: ${state.currentDojiPrice?.toStringAsFixed(0)} VND/lượng'),
                 ]);
               } else if (state.errorMessage != null) {
-                return Center(child: Text("Error: ${state.errorMessage}"));
+                return Container(
+                  padding: const EdgeInsets.all(24),
+                  child: Text("Error: ${state.errorMessage}"),
+                );
               }
               return const SizedBox.shrink();
             },

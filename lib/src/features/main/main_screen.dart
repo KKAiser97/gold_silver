@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gold_silver/src/core/injector/locator.dart';
-import 'package:gold_silver/src/features/alert/alert_screen.dart';
 import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_event.dart';
 import 'package:gold_silver/src/features/dashboard/presentation/dashboard_screen.dart';
-import 'package:gold_silver/src/features/news/news_screen.dart';
+import 'package:gold_silver/src/features/news/presentation/bloc/news_bloc.dart';
+import 'package:gold_silver/src/features/news/presentation/bloc/news_event.dart';
+import 'package:gold_silver/src/features/news/presentation/news_screen.dart';
 import 'package:gold_silver/src/features/settings/settings_screen.dart';
 import 'package:gold_silver/src/theme/app_color.dart';
 import 'package:gold_silver/src/utils/enums.dart';
@@ -30,8 +31,10 @@ class _MainScreenState extends State<MainScreen> {
         )),
       child: const DashboardScreen(),
     ),
-    const AlertsScreen(),
-    const NewsScreen(),
+    BlocProvider<NewsBloc>(
+      create: (context) => locator<NewsBloc>()..add(NewsEvent(context)),
+      child: const NewsScreen(),
+    ),
     const SettingsScreen(),
   ];
 
@@ -60,10 +63,6 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: const Icon(Icons.article),
             label: 'news'.i18n(),
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.notifications),
-            label: 'alerts'.i18n(),
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.settings),

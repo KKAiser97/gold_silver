@@ -3,7 +3,7 @@
   "dashboard": "Dashboard",
   "news": "News",
   "alerts": "Alerts",
-  "cai_dat": "Settings",
+  "settings": "Settings",
   "select": "Select",
   "update_price": "Update Price",
   "doi_mat_khau": "Change Password",
@@ -27,5 +27,6 @@
   "xac_nhan_mat_khau": "Confirm Password",
   "doi_mat_khau_thanh_cong": "Password changed successfully",
   "thay_doi_mat_khau_that_bai": "Failed to change password",
-  "mat_khau_moi_khong_khop": "New password does not match"
+  "mat_khau_moi_khong_khop": "New password does not match",
+  "xem_them": "See more..."
 }

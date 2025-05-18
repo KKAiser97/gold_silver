@@ -14,6 +14,10 @@ import 'package:gold_silver/src/features/forgot_password/data/datasource/passwor
 import 'package:gold_silver/src/features/forgot_password/data/repository_impl/password_repository_impl.dart';
 import 'package:gold_silver/src/features/forgot_password/domain/password_repository.dart';
 import 'package:gold_silver/src/features/forgot_password/presentation/bloc/password_bloc.dart';
+import 'package:gold_silver/src/features/news/data/datasource/news_service.dart';
+import 'package:gold_silver/src/features/news/data/repository_impl/news_repository_impl.dart';
+import 'package:gold_silver/src/features/news/domain/news_repository.dart';
+import 'package:gold_silver/src/features/news/presentation/bloc/news_bloc.dart';
 
 final GetIt locator = GetIt.instance;
 final firebaseAuth = FirebaseAuth.instance;
@@ -25,6 +29,7 @@ void setupLocator() {
   locator.registerLazySingleton<AlphaDioClient>(() => AlphaDioClient());
   locator.registerLazySingleton<GoldDioClient>(() => GoldDioClient());
   locator.registerLazySingleton<DojiDioClient>(() => DojiDioClient());
+  locator.registerLazySingleton<NewsDioClient>(() => NewsDioClient());
 
   /// Register Dashboard services, repo, bloc
   locator.registerLazySingleton<DashboardService>(() => DashboardServiceImpl(
@@ -44,4 +49,9 @@ void setupLocator() {
   locator.registerLazySingleton<PasswordService>(() => PasswordServiceImpl());
   locator.registerLazySingleton<PasswordRepository>(() => PasswordServiceRepositoryImpl(locator<PasswordService>()));
   locator.registerFactory<PasswordBloc>(() => PasswordBloc(repository: locator<PasswordRepository>()));
+
+  /// Register News services, repos, blocs
+  locator.registerLazySingleton<NewsService>(() => NewsServiceImpl(locator<NewsDioClient>()));
+  locator.registerLazySingleton<NewsRepository>(() => NewsServiceRepositoryImpl(locator<NewsService>()));
+  locator.registerFactory<NewsBloc>(() => NewsBloc(repository: locator<NewsRepository>()));
 }

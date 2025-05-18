@@ -3,7 +3,7 @@
   "dashboard": "Bảng",
   "news": "Tin tức",
   "alerts": "Cảnh báo",
-  "cai_dat": "Cài đặt",
+  "settings": "Cài đặt",
   "select": "Chọn",
   "update_price": "Cập nhật giá",
   "doi_mat_khau": "Đổi mật khẩu",
@@ -27,5 +27,6 @@
   "xac_nhan_mat_khau": "Xác nhận mật khẩu",
   "doi_mat_khau_thanh_cong": "Đổi mật khẩu thành công",
   "thay_doi_mat_khau_that_bai": "Thay đổi mật khẩu thất bại",
-  "mat_khau_moi_khong_khop": "Mật khẩu mới không khớp"
+  "mat_khau_moi_khong_khop": "Mật khẩu mới không khớp",
+  "xem_them": "Xem thêm..."
 }
