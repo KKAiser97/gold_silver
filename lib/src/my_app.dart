@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
       create: (_) => locator<AuthBloc>()..add(const CheckUserEvent()),
       child: MaterialApp(
         title: 'app_name'.i18n(),
+        debugShowCheckedModeBanner: false,
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,

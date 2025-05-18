@@ -73,6 +73,12 @@ dev_dependencies:
   retrofit_generator: ^8.2.1
   json_serializable: ^6.8.0
   build_runner: ^2.4.9
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  image_path: "assets/imgs/app_icon.png"
+  android: true
+  ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -84,6 +90,7 @@ flutter:
   generate: true
   assets:
     - assets/svgs/
+    - assets/imgs/
     - assets/langs/
 
   # To add custom fonts to your application, add a fonts section here,
