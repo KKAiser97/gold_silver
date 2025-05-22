@@ -10,6 +10,7 @@ import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_e
 import 'package:gold_silver/src/features/dashboard/presentation/bloc/dashboard_state.dart';
 import 'package:gold_silver/src/utils/constants.dart';
 import 'package:gold_silver/src/utils/enums.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   late final DashboardRepository repository;
@@ -58,7 +59,9 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
 
   Future<void> _onFetchMetalChartData(FetchMetalChartData event, Emitter<DashboardState> emit) async {
     emit(state.copyWith(isLoading: true, errorMessage: null));
-
+    final prefs = await SharedPreferences.getInstance();
+    final exchangeRate = prefs.getDouble(SharedKey.exchangeRate) ?? 0;
+    emit(state.copyWith(exchangeRate: exchangeRate));
     try {
       final response = await repository.getMetalData(
         function: AppConstant.timeSeries,

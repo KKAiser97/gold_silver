@@ -5,8 +5,10 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:gold_silver/src/core/client/dio_client.dart';
 import 'package:gold_silver/src/features/dashboard/domain/models/remote/gold_vn_model.dart';
 import 'package:gold_silver/src/features/dashboard/domain/models/remote/metal_world_price_model.dart';
+import 'package:gold_silver/src/features/xchange_rate/domain/models/xchange_rate_model.dart';
 import 'package:gold_silver/src/utils/constants.dart';
 import 'package:gold_silver/src/utils/enums.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -47,10 +49,12 @@ Future<void> fetchGoldPriceAndNotify() async {
   try {
     final bgDio = BgDioClient().dio;
     final goldVNDio = BgDojiDioClient().dio;
+    final xchangeRateDio = ExchangeRateDioClient().dio;
     final response = await Future.wait([
       getCurrentWorldPrice(bgDio, MetalType.gold.symbol),
       getCurrentWorldPrice(bgDio, MetalType.silver.symbol),
       getGoldVnData(goldVNDio),
+      getExchangeRate(xchangeRateDio),
     ]);
 
     final num goldPrice = (response[0] as MetalWorldPriceModel?)?.price ?? 0;
@@ -91,6 +95,26 @@ Future<GoldVnModel?> getGoldVnData(Dio dio) async {
   } catch (e) {
     return null;
   }
+}
+
+Future<ExchangeRateModel> getExchangeRate(Dio dio) async {
+  try {
+    final res = await dio.get('live', queryParameters: {
+      'access_key': AppConstant.apiKeyExRate,
+      'currencies': 'VND',
+    });
+    final rate = ExchangeRateModel.fromJson(res.data);
+    await saveToSharedPreferences(
+        SharedKey.exchangeRate, rate.quotes.isNotEmpty ? rate.quotes.entries.first.value.toDouble() : 0);
+    return rate;
+  } catch (e) {
+    rethrow;
+  }
+}
+
+Future<void> saveToSharedPreferences(String key, double value) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setDouble(key, value);
 }
 
 Future<void> showNotification({

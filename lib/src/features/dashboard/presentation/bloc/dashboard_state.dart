@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:gold_silver/src/features/dashboard/domain/models/local/metal_chart_model.dart';
-import 'package:gold_silver/src/utils/constants.dart';
 import 'package:gold_silver/src/utils/enums.dart';
 
 class DashboardState extends Equatable {
@@ -13,6 +12,7 @@ class DashboardState extends Equatable {
   final double maxY;
   final double currentPrice;
   final double? currentDojiPrice;
+  final double exchangeRate;
   final Interval interval;
   final bool isLoading;
   final bool isLoading2;
@@ -28,6 +28,7 @@ class DashboardState extends Equatable {
     required this.maxY,
     required this.currentPrice,
     this.currentDojiPrice,
+    this.exchangeRate = 0,
     required this.interval,
     required this.isLoading,
     required this.isLoading2,
@@ -45,6 +46,7 @@ class DashboardState extends Equatable {
       maxY: 0,
       currentPrice: 0,
       currentDojiPrice: null,
+      exchangeRate: 0,
       interval: Interval.gold,
       isLoading: false,
       isLoading2: false,
@@ -53,7 +55,7 @@ class DashboardState extends Equatable {
     );
   }
 
-  int get currentPriceConvertToTael => (currentPrice * AppConstant.usdToVnd * 1.205).round(); // 1 lượng = 1.205oz
+  int get currentPriceConvertToTael => (currentPrice * exchangeRate * 1.205).round(); // 1 lượng = 1.205oz
 
   DashboardState copyWith({
     MetalType? metalType,
@@ -64,6 +66,7 @@ class DashboardState extends Equatable {
     double? maxY,
     double? currentPrice,
     double? currentDojiPrice,
+    double? exchangeRate,
     Interval? interval,
     bool? isLoading,
     bool? isLoading2,
@@ -79,6 +82,7 @@ class DashboardState extends Equatable {
       maxY: maxY ?? this.maxY,
       currentPrice: currentPrice ?? this.currentPrice,
       currentDojiPrice: currentDojiPrice ?? this.currentDojiPrice,
+      exchangeRate: exchangeRate ?? this.exchangeRate,
       interval: interval ?? this.interval,
       isLoading: isLoading ?? this.isLoading,
       isLoading2: isLoading2 ?? this.isLoading2,
@@ -97,6 +101,7 @@ class DashboardState extends Equatable {
         maxY,
         currentPrice,
         currentDojiPrice,
+        exchangeRate,
         interval,
         isLoading,
         isLoading2,
