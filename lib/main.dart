@@ -41,7 +41,7 @@ void main() async {
 // Calculate time to 9:00 AM to trigger the task
 int _calculateInitialDelayHour() {
   final now = DateTime.now();
-  final next9AM = DateTime(now.year, now.month, now.day, 17);
+  final next9AM = DateTime(now.year, now.month, now.day, 9);
   if (now.isAfter(next9AM)) {
     next9AM.add(const Duration(days: 1));
   }
@@ -50,7 +50,7 @@ int _calculateInitialDelayHour() {
 
 int _calculateInitialDelayMinute() {
   final now = DateTime.now();
-  final next9AM = DateTime(now.year, now.month, now.day, 17);
+  final next9AM = DateTime(now.year, now.month, now.day, 9);
   if (now.isAfter(next9AM)) {
     next9AM.add(const Duration(days: 1));
   }
